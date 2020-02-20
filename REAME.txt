@@ -1,0 +1,7 @@
+-------------------------------------------
+-versões:
+3.0.2 --- aqui foi implementado varias coisas 
+3.0.3 --- implementado a relação de historico de transações
+
+------------------------------------------
+by lucas jao
