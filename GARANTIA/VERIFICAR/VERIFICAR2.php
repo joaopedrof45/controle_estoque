@@ -82,7 +82,9 @@
   while ($registro = mysqli_fetch_array($pesq1)) {
     $idbanco = $registro[0];
   }
-
+  $data=[]; // inicializando array e interador
+  $i=0;
+  
 
 // aqui faz as alterações na garantia que é almoxarifado
 
@@ -95,6 +97,15 @@
       while ($registro3 = mysqli_fetch_array($pesq3)) {
 
         $dataformat=date('d/m/Y', strtotime($registro3[1]));
+        
+        
+        $data[$i]['id']=$registro3[0];
+        $data[$i]['DESCRICAO']=$registro3[2];
+        $data[$i]['dataformat']=$dataformat;
+        $data[$i]['PATRIMONIO']=$registro3[4];
+        $i++;
+        
+        
         echo "
  <tr>
  <td><h5>$registro3[0]</h5></td>
@@ -122,6 +133,13 @@
       while ($registro4 = mysqli_fetch_array($pesq4)) {
 
         $dataformat=date('d/m/Y', strtotime($registro4[1]));
+        
+        $data[$i]['id']=$registro4[0];
+        $data[$i]['DESCRICAO']=$registro4[2];
+        $data[$i]['dataformat']=$dataformat;
+        $data[$i]['PATRIMONIO']=$registro4[4];
+        $i++;
+        
         echo "
  <tr>
  <td><h5>$registro4[0]</h5></td>
@@ -152,6 +170,15 @@
       while ($registro3 = mysqli_fetch_array($pesq3)) {
 
         $dataformat=date('d/m/Y H:i:s', strtotime($registro3[1]));
+        
+        $data[$i]['id']=$registro3[0];
+        $data[$i]['DESCRICAO']=$registro3[2];
+        $data[$i]['dataformat']=$dataformat;
+        $data[$i]['PATRIMONIO']=$registro3[4];
+        $i++;
+
+        
+        
         echo "
  <tr>
  <td><h5>$registro3[0]</h5></td>
@@ -181,6 +208,12 @@
 
 $dataformat=date('d/m/Y H:i:s', strtotime($registro5[1]));
 
+        $data[$i]['id']=$registro5[0];
+        $data[$i]['DESCRICAO']=$registro5[2];
+        $data[$i]['dataformat']=$dataformat;
+        $data[$i]['PATRIMONIO']=$registro5[4];
+        $i++;
+
         echo "
  <tr>
  <td><h5>$registro5[0]</h5></td>
@@ -204,6 +237,33 @@ $dataformat=date('d/m/Y H:i:s', strtotime($registro5[1]));
   }
 
 
+
+  
+
+                //$data1=json_encode($data);
+                // esse json encode é muito bom , simples assim  usando isso agora o $data1 esta 
+                //em formato json
+                // se quiser mandar para outra pagina é simples 
+                //basta fazer igual ao esquema do html abaixo
+                // mandar pelo input e esconder o campo com type hidden
+                // e na outra pagina para recupar é só necessário usar a função json_decode($var);
+
+
+                include_once("../../VERIFICAR/gerar_relatorio/Export.php");
+
+                //chama  a classe de exportação  passando  o nome da tabela , nome do arquivo , e o array
+              
+                // esse método gera um html , então como esta pagina tem um estilo de pagina proprio
+                // é bom e necessário enviar para outra página qeu fará a tratativa  pelo form que 
+                //quando chamado joga para esse outra pagina a variavel com o conteudo html que esta
+                // dentro do input escondido.
+
+                $data= json_encode($data);
+                echo"<form action='../../VERIFICAR/gerar_relatorio/api.php' method='POST'>";
+                echo"<input  type='submit' value='Gerar Excel'>";
+                echo"<input name='almox' type='hidden' value='$data'>";
+                echo"<input name='tipo' type='hidden' value='garantia'>";
+                echo"</form>";
 
 
 

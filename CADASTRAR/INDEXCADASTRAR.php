@@ -58,6 +58,10 @@
                     <h2 class="title">Cadastrar</h2>
                 </div>
                 <div class="card-body">
+
+
+
+
                     <form name="form1" action="salva_cadastro.php" method="POST">
 
 
@@ -207,6 +211,15 @@
                             </div>
                         </div>
 
+                          <div class="form-row">
+                            <div class="name">Protocolo</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="protoc" class="input--style-5" type="text" name="protocolo">
+                                </div>
+                            </div>
+                        </div>
+
 
 
 
@@ -219,10 +232,16 @@
                         </div>
                     </form>
 
-                    <form action="../PRINCIPAL">
+               <br><br><br>
+                    <?php
+include_once("import.html");
+echo"<br><br><br><br>";
+?>
+     <form action="../PRINCIPAL">
                         <br><input type="submit" class="btn btn--radius btn--pill btn--green btn--dir" value="Voltar">
 
                     </form>
+
                 </div>
             </div>
 

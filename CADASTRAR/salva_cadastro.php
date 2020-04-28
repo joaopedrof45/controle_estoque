@@ -2,6 +2,7 @@
 <?php
 include_once("../conexao.php");
 $NOMEITEM = $_POST['NOMEITEM'];
+$suaString = strtolower($NOMEITEM);
 $LOCALIZACAO = $_POST['locais'];
 $ORIGEM = $_POST['locais'];
 $TIPO = $_POST['TIPO'];
@@ -10,6 +11,7 @@ $DESCRICAO = $_POST['DESCRICAO'];
 $patrimonio = $_POST['Patrimonio'];
 $numserie = $_POST['serie'];
 $gms= $_POST['gms'];
+$proto= $_POST['protocolo'];
 
 if ($NOMEITEM == "" || $TIPO == "" || $TIPO == "Escolha uma opção" ||  $QUANTIDADE == "" ||  $DESCRICAO == "") {
   echo "<script> alert('Preencha todos os campos') ;</script>";
@@ -28,7 +30,7 @@ if ($NOMEITEM == "" || $TIPO == "" || $TIPO == "Escolha uma opção" ||  $QUANTI
 
 
 
-  $newpesquisa = "Select * from controle where NOMEITEM='$NOMEITEM' AND LOCALIZACAO='$ORIGEM' ";
+  $newpesquisa = "Select * from controle where NOMEITEM='$suaString' AND LOCALIZACAO='$ORIGEM' ";
   $pesq1 = mysqli_query($conn, $newpesquisa);
 
   while ($registro = mysqli_fetch_array($pesq1)) {
@@ -36,11 +38,11 @@ if ($NOMEITEM == "" || $TIPO == "" || $TIPO == "Escolha uma opção" ||  $QUANTI
     $QTD = $registro['QUANTIDADE'];
     $LOCBANCO = $registro['LOCALIZACAO'];
   }
-$suaString = strtolower($NOMEITEM);
+
   if ($nomeitemBANCO == $suaString && $LOCBANCO == $ORIGEM) {
 
     $novaqtd = $QTD + $QUANTIDADE;
-    $result_select = "UPDATE controle set QUANTIDADE ='$novaqtd'  where NOMEITEM='$NOMEITEM' and LOCALIZACAO='$ORIGEM' ";
+    $result_select = "UPDATE controle set QUANTIDADE ='$novaqtd'  where NOMEITEM='$suaString' and LOCALIZACAO='$ORIGEM' ";
     $pesq = mysqli_query($conn, $result_select);
 
    
@@ -73,9 +75,9 @@ echo "<script>history.go(-1)</script>";
   } elseif ($patrimonio == 0 && $TIPO == "Almoxarifado") {
 
 
-    $result_usuario = "INSERT INTO controle(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,gms)
+    $result_usuario = "INSERT INTO controle(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,gms,PROTOCOLO)
 
- VALUES('$suaString','$LOCALIZACAO','$ORIGEM','null','$TIPO','$QUANTIDADE','$DESCRICAO',NOW(),'$patrimonio','$numserie','$gms')";
+ VALUES('$suaString','$LOCALIZACAO','$ORIGEM','null','$TIPO','$QUANTIDADE','$DESCRICAO',NOW(),'$patrimonio','$numserie','$gms','$proto')";
 
 
     $pesq = mysqli_query($conn, $result_usuario);
@@ -101,7 +103,7 @@ echo "<script>history.go(-1)</script>";
 
 
 
-    $newpesquisa10 = "Select * from controle_prot where NOMEITEM='$NOMEITEM' AND PATRIMONIO='$patrimonio' ";
+    $newpesquisa10 = "Select * from controle_prot where NOMEITEM='$suaString' AND PATRIMONIO='$patrimonio' ";
     $start = mysqli_query($conn, $newpesquisa10);
 
     while ($registro2 = mysqli_fetch_array($start)) {
@@ -114,9 +116,9 @@ echo "<script>history.go(-1)</script>";
     } else {
 
 
-      $result_usuario1 = "INSERT INTO controle_prot(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,gms)
+      $result_usuario1 = "INSERT INTO controle_prot(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,gms,PROTOCOLO)
 
- VALUES('$NOMEITEM','$LOCALIZACAO','$ORIGEM','null','$TIPO','$QUANTIDADE','$DESCRICAO',NOW(),'$patrimonio','$numserie','$gms')";
+ VALUES('$suaString','$LOCALIZACAO','$ORIGEM','null','$TIPO','$QUANTIDADE','$DESCRICAO',NOW(),'$patrimonio','$numserie','$gms','$proto')";
 
 
       $pesq = mysqli_query($conn, $result_usuario1);

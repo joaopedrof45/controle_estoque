@@ -54,7 +54,57 @@
                 <div class="card-body">
                     <form action="salva_movimento.php" method="POST">
 
+<?php
+  include_once("../conexao2.php");
+  include_once("../conexao.php");
 
+
+if(isset($_GET['tipo'])){
+    $tipo=$_GET['tipo'];
+}else{
+   $tipo=""; 
+}
+
+
+                if (isset($_GET['id'])) {
+
+                 $id=$_GET['id'];
+              
+
+if($tipo=="Almoxarifado"){
+$newpesquisa = "Select * from controle where id='$id' ";
+  $consulta = mysqli_query($conn, $newpesquisa);   
+}
+
+if($tipo=="Patrimonio"){
+$newpesquisa = "Select * from controle_prot where PATRIMONIO='$id' ";
+  $consulta = mysqli_query($conn, $newpesquisa);  
+
+}
+  
+
+  while ($registro = mysqli_fetch_array($consulta)) {
+    $nomeBanco = $registro["NOMEITEM"];
+    $locBanco = $registro["LOCALIZACAO"];
+    $tipoBanco = $registro["TIPO"];
+    $pat = $registro["PATRIMONIO"];
+  }
+                }else{
+
+    $tipoBanco="0";
+    $locBanco="0";
+    $tipoBanco="0";
+  }
+
+
+
+
+
+
+        
+
+
+?>
 
                         <div onchange="esconder()" class="form-row">
                             <div class="name">Tipo</div>
@@ -64,9 +114,11 @@
 
                                         <select id="tipo" name="TIPO">
                                             <option id="esc" selected="selected" disabled>Escolha uma opção</option>
-                                            <option> Almoxarifado</option>
-                                            <option> Patrimonio</option>
-
+                                            <?php if($tipoBanco=="Almoxarifado"){?><option selected="selected"> Almoxarifado</option><?php }?>
+                                            <?php if($tipoBanco=="0"){?><option > Almoxarifado</option><?php }?>
+                                            <?php if($tipoBanco=="Patrimonio"){?><option selected="selected"> Patrimonio</option><?php }?>
+                                            <?php if($tipoBanco=="0"){?><option > Patrimonio</option><?php }?>
+                                          
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>
@@ -91,7 +143,7 @@
 
 
 
-
+                                               if($nomeBanco=="0"){
                                                 $result_select = "SELECT  DISTINCT NOMEITEM  from controle ";
                                                 $pesq = mysqli_query($conn, $result_select);
 
@@ -102,7 +154,12 @@
 
                                                     echo " <option> $registro[0]</option>";
                                                 }
+                                            }else{
+
+                                                 echo " <option selected='selected'> $nomeBanco</option>";
+                                            }
                                                 ?>
+                                            }
 
 
 
@@ -138,7 +195,7 @@
                                                 <option id="pat" selected="selected" disabled>Escolha uma opção</option>
 
                                                 <?php
-
+                                                      if($tipo==""){
                                                 $result_select = "SELECT  DISTINCT PATRIMONIO  from controle_prot ";
                                                 $pesq = mysqli_query($conn, $result_select);
 
@@ -146,6 +203,13 @@
 
                                                     echo " <option> $registro[0]</option>";
                                                 }
+
+                                                      }else{
+
+                                                        echo " <option selected='selected'> $pat</option>";
+                                                      }
+
+                                              
                                                 ?>
 
 
@@ -167,14 +231,17 @@
 
                                         <select name="ORIGEM">
 
-
+                                           <?php  if($locBanco=="0"){?>
                                             <option id="esc" selected="selected" disabled>Escolha uma opção</option>
                                             <option>Mateus Leme</option>
                                             <option>Colombo</option>
                                             <option>Londrina</option>
                                             <option>Ponta Grossa</option>
 
-
+                                            <?php }else{
+                                                 echo " <option> $locBanco</option>";
+                                             }
+                                                 ?>
 
 
                                         </select>

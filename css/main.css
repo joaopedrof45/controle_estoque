@@ -418,8 +418,16 @@ h6 {
   max-width: 960px;
 }
 
+/* ==========================================================================
+   #FUNDO BRANCO TAMANHO 790
+   ========================================================================== */
+
 .wrapper--w790 {
- max-width: 960px;
+  height:auto;
+  overflow:hidden;
+  margin:0 auto;
+  width: 100%;
+  max-width: 1300px;
 }
 
 .wrapper--w780 {

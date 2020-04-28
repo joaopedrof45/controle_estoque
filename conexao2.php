@@ -10,7 +10,7 @@ $password_conexao = "5upr1m4r7";
 */
 
 $hostname_conexao = "localhost";
-$database_conexao = "controle_copia";
+$database_conexao = "controle";
 $username_conexao = "root";
 $password_conexao = "";
 
