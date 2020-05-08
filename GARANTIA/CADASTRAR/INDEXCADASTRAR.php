@@ -89,16 +89,23 @@
 
                                             <select id="selenome" name="NOMEITEM">
                                                 <option id="esc" selected="selected">Escolha uma opção</option>
-                                                <option>todos itens</option <?php
-                                                                            include_once('../../conexao.php');
+                                                <option>Nao Existem Produtos</option 
+<?php
+                    include_once('../../conexao.php');
 
-                                                                            $result_select = "SELECT  NOMEITEM ,id  from controle   ";
-                                                                            $pesq = mysqli_query($conn, $result_select);
+                    $result_select = "SELECT  NOMEITEM ,id  from controle   ";
+                    $pesq = mysqli_query($conn, $result_select);
 
-                                                                            while ($registro = mysqli_fetch_array($pesq)) {
-                                                                                echo "<option> $registro[0] </option>";
-                                                                            }
-                                                                            ?> </select> <div class="select-dropdown">
+                    while ($registro = mysqli_fetch_array($pesq)) {
+                        echo "<option> $registro[0] </option>";
+                    }
+
+
+if($pesq==0){
+    echo "<option>Nao existe Produtos</option>";
+}
+
+                    ?> </select> <div class="select-dropdown">
                                         </div>
                                     </div>
                                 </div>
@@ -210,18 +217,30 @@
 
                     <input " class=" btn btn--radius-2 btn--red" type="submit" onclick="return verificacampo()" value="Cadastrar" />
                 </div>
+
+
                 </form>
 
                 <form action="../../PRINCIPAL">
                     <br><input type="submit" class="btn btn--radius btn--pill btn--green btn--dir" value="Voltar">
 
                 </form>
+
+<br><br><br><br>
+     <?php
+include_once("import_garantia.html");
+echo"<br><br><br><br>";
+?>
+   
+
+
             </div>
         </div>
 
 
     </div>
     </div>
+
 
 
     <script>

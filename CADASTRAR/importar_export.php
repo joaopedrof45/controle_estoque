@@ -6,27 +6,22 @@
 
 
 
-public function importar($nome_arquivo,$tabela){
+public function importar($caminho,$nome_arquivo,$tabela,$tipo){
     include_once("../conexao.php");
     include_once("../conexao2.php");
 
   //verificando se o arquivo e csv
 
-  $ext=explode(".",$nome_arquivo);
-  $extensao=end($ext);
-  if($extensao!="csv"){
-    echo "<script>alert('Escolha um Aquivo CSV');history.back()</script>";
-      exit;
-  }else{
-    // Exemplo de scrip para exibir os nomes obtidos no arquivo CSV de exemplo
+
+
 
 
     $delimitador = ';';
     $cerca = '"';
     // Abrir arquivo para leitura
-    $f = fopen($nome_arquivo, 'r');
+    $f = fopen($caminho, 'r');
 
-
+var_dump($nome_arquivo);
 if ($f) { 
 
     // Ler cabecalho do arquivo
@@ -46,65 +41,137 @@ if ($f) {
         // Montar registro com valores indexados pelo cabecalho
         $registro = array_combine($cabecalho, $linha);
 
-        //verificando se está faltando alguma coluna no
-        if(@$registro['NOMEITEM']==""||@$registro['LOCALIZACAO']==""||@$registro['ORIGEM']==""||@$registro['DESTINO']==""||@$registro['TIPO']==""||@$registro['QUANTIDADE']==""||@$registro['DESCRICAO']==""||@$registro['DATA']==""||@$registro['PATRIMONIO']==""||@$registro['NR_SERIE']==""||@$registro['id']==""||@$registro['MOTIVO']==""||@$registro['PROTOCOLO']==""||@$registro['gms']==""){
-          echo "<script>alert('Estão faltando colunas no csv ');history.back()</script>";
-          exit;
-        }
+     
      
 switch($tabela){
 
     case "controle":
-    try{
-        $result_usuario = "INSERT INTO controle(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,id,MOTIVO,PROTOCOLO,gms)
 
-        VALUES('$registro[NOMEITEM]','$registro[LOCALIZACAO]','$registro[ORIGEM]','$registro[DESTINO]','$registro[TIPO]','$registro[QUANTIDADE]','$registro[DESCRICAO]',NOW(),'$registro[PATRIMONIO]','$registro[NR_SERIE]','$registro[id]','$registro[MOTIVO]','$registro[PROTOCOLO]','$registro[gms]')";
-       
-       
-        $pesq = mysqli_query($conn, $result_usuario);
-        
-        if($pesq==0){
-          $cont++;
-          echo"<script>alert(Erro ao Importar $registro[NOMEITEM] );</script>";
-        }else
-        {
-          $cont1++; // conta quantas importações foram feitas
-        }
+           //verificando se está faltando alguma coluna no
+                if(@$registro['NOMEITEM']==""||@$registro['LOCALIZACAO']==""||@$registro['ORIGEM']==""||@$registro['DESTINO']==""||@$registro['TIPO']==""||@$registro['QUANTIDADE']==""||@$registro['DESCRICAO']==""||@$registro['DATA']==""||@$registro['PATRIMONIO']==""||@$registro['NR_SERIE']==""||@$registro['id']==""||@$registro['MOTIVO']==""||@$registro['PROTOCOLO']==""||@$registro['gms']==""){
+                  echo "<script>alert('Estão faltando colunas no csv ');history.back()</script>";
+                  exit;
+                }
 
 
-      }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
+            try{
+                $result_usuario = "INSERT INTO controle(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,id,MOTIVO,PROTOCOLO,gms)
+
+                VALUES('$registro[NOMEITEM]','$registro[LOCALIZACAO]','$registro[ORIGEM]','$registro[DESTINO]','$registro[TIPO]','$registro[QUANTIDADE]','$registro[DESCRICAO]',NOW(),'$registro[PATRIMONIO]','$registro[NR_SERIE]','$registro[id]','$registro[MOTIVO]','$registro[PROTOCOLO]','$registro[gms]')";
+               
+               
+                $pesq = mysqli_query($conn, $result_usuario);
+                
+                if($pesq==0){
+                  $cont++;
+                  echo"<script>alert(Erro ao Importar $registro[NOMEITEM] );</script>";
+                }else
+                {
+                  $cont1++; // conta quantas importações foram feitas
+                }
+
+
+              }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
 
     break;
 
     case "controle_prot":
-        try{
-            $result_usuario = "INSERT INTO controle(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,id,MOTIVO,PROTOCOLO,gms)
-    
-            VALUES('$registro[NOMEITEM]','$registro[LOCALIZACAO]','$registro[ORIGEM]','$registro[DESTINO]','$registro[TIPO]','$registro[QUANTIDADE]','$registro[DESCRICAO]',NOW(),'$registro[PATRIMONIO]','$registro[NR_SERIE]','$registro[id]','$registro[MOTIVO]','$registro[PROTOCOLO]','$registro[gms]')";
+
+              // primeira faz verificações de colunas das planilha
+
+               if(@$registro['NOMEITEM']==""||@$registro['LOCALIZACAO']==""||@$registro['ORIGEM']==""||@$registro['DESTINO']==""||@$registro['TIPO']==""||@$registro['QUANTIDADE']==""||@$registro['DESCRICAO']==""||@$registro['DATA']==""||@$registro['PATRIMONIO']==""||@$registro['NR_SERIE']==""||@$registro['MOTIVO']==""||@$registro['PROTOCOLO']==""||@$registro['gms']==""){
+                    echo "<script>alert('Estão faltando colunas no csv ');history.back()</script>";
+                    exit;
+                  }
+
+
+          // faz o insert na tabela com try cat caso houver erro
+
+          try{
+            $result_usuario = "INSERT INTO controle_prot(NOMEITEM,LOCALIZACAO,ORIGEM,DESTINO,TIPO,QUANTIDADE,DESCRICAO,DATA,PATRIMONIO,NR_SERIE,MOTIVO,PROTOCOLO,gms)
+
+            VALUES('$registro[NOMEITEM]','$registro[LOCALIZACAO]','$registro[ORIGEM]','$registro[DESTINO]','$registro[TIPO]','$registro[QUANTIDADE]','$registro[DESCRICAO]',NOW(),'$registro[PATRIMONIO]','$registro[NR_SERIE]','$registro[MOTIVO]','$registro[PROTOCOLO]','$registro[gms]')";
            
            
             $pesq = mysqli_query($conn, $result_usuario);
-    
-          }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
+
+          //faz contador para ver quantos registros foram inseridos caso tenha dado certo
+
+            if($pesq==0){
+              $cont++;
+              echo"<script>alert(Erro ao Importar $registro[NOMEITEM] );</script>";
+            }else
+            {
+              $cont1++; // conta quantas importações foram feitas
+            }
+              
+                    }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
     
         break;
-        case "history":
-           
-        echo"nada implementado ainda";
-        break;
-        
+ 
         case "garantia":
-        echo"nada implementado ainda";
+
+      
+
+
+            // faz o insert na tabela com try cat caso houver erro
+
+            try{
+              $result_usuario = "INSERT INTO garantia(id,data_ex,descricao,data_ini,pat)
+
+              VALUES('$registro[id]','$registro[data_ex]','$registro[descricao]','$registro[data_ini]','$registro[pat]')";
+             
+             
+              $pesq = mysqli_query($conn, $result_usuario);
+
+            //faz contador para ver quantos registros foram inseridos caso tenha dado certo
+
+              if($pesq==0){
+                $cont++;
+                echo"<script>alert(Erro ao Importar  );</script>";
+              }else
+              {
+                $cont1++; // conta quantas importações foram feitas
+              }
+                
+
+
+
+    }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
         
         break;
             
         case "sedes":
-        echo"nada implementado ainda"; 
         
+ 
+ if(@$registro['id']==""||@$registro['nomesede']==""||@$registro['endereco']==""||@$registro['nr']==""||@$registro['cep']==""||@$registro['local']==""){
+                      echo "<script>alert('Estão faltando colunas no csv  ');history.back()</script>";
+                      exit;
+                    }
+            // faz o insert na tabela com try cat caso houver erro
+
+            try{
+              $result_usuario = "INSERT INTO sedes()
+
+              VALUES('$registro[id]','$registro[nomesede]','$registro[endereco]','$registro[nr]','$registro[cep]','$registro[local]')";
+             
+             
+              $pesq = mysqli_query($conn, $result_usuario);
+
+            //faz contador para ver quantos registros foram inseridos caso tenha dado certo
+
+              if($pesq==0){
+                $cont++;
+                echo"<script>alert(Erro ao Importar  );</script>";
+              }else
+              {
+                $cont1++; // conta quantas importações foram feitas
+              }
+                }catch(Exception $e){echo 'Exceção capturada: ',  $e->getMessage(), "\n";};
         break;
         
         default:
-        echo"escolha de tabela inválida";
+        echo"<script>alert(Opção Inválida !  );</script>";
         break;
 
     
@@ -124,7 +191,7 @@ if($cont==0 && $cont1==0){
   
   echo "<script>alert('Todas Importações tiveram erro!');history.back()</script>";
 }else{
-  echo "<script>alert('Total de importações : $cont1 ');history.back()</script>";
+  echo "<script>alert('Total de importações : $cont1  ');history.back()</script>";
 }
 
 
@@ -139,7 +206,7 @@ fclose($f);
     
 
 }
- }
+ 
     
 
     ?>

@@ -35,10 +35,10 @@
           <h4>Id</h4>
         </td>
         <td class="principal">
-          <h4>Descrição</h4>
+          <h4>Data de Expiração</h4>
         </td>
         <td class="principal">
-          <h4>Data de Expiração</h4>
+          <h4>Descrição</h4>
         </td>
         <td class="principal">
           <h4>Patrimônio</h4>
@@ -91,26 +91,28 @@
   if ($TIPO == "Almoxarifado") {
     if ($NOMEITEM !== "todos itens") {
 
-      $result_select3 = "SELECT * from garantia where id='$idbanco' ";
+      $result_select3 = "SELECT * from garantia where id='$idbanco'";
       $pesq3 = mysqli_query($conn, $result_select3);
 
       while ($registro3 = mysqli_fetch_array($pesq3)) {
 
         $dataformat=date('d/m/Y', strtotime($registro3[1]));
+        $dataformat2=date('d/m/Y', strtotime($registro3[3]));
         
         
         $data[$i]['id']=$registro3[0];
-        $data[$i]['DESCRICAO']=$registro3[2];
-        $data[$i]['dataformat']=$dataformat;
-        $data[$i]['PATRIMONIO']=$registro3[4];
+        $data[$i]['data_ex']=$dataformat;
+        $data[$i]['descricao']=$registro3[2];
+        $data[$i]['data_ini']=$dataformat2;
+        $data[$i]['pat']=$registro3[4];
         $i++;
-        
         
         echo "
  <tr>
  <td><h5>$registro3[0]</h5></td>
- <td><h5>$registro3[2]</h5></td>
  <td><h5>$dataformat</h5></td>
+ <td><h5>$registro3[2]</h5></td>
+ <td style='display:none'><h5>$dataformat2</h5></td>
  <td><h5>$registro3[4]</h5></td>
   <td> 
  <a class='btn-editar btn btn-sm btn-warning' href='../VERIFICAR/editar_almox.php?id=$registro3[0]'
@@ -127,24 +129,27 @@
       }
     } else {
 
-      $result_select4 = "SELECT * from garantia where id <>'NULL'";
+      $result_select4 = "SELECT * from garantia where id <>'NULL' AND pat=0";
       $pesq4 = mysqli_query($conn, $result_select4);
 
       while ($registro4 = mysqli_fetch_array($pesq4)) {
 
         $dataformat=date('d/m/Y', strtotime($registro4[1]));
+        $dataformat2=date('d/m/Y', strtotime($registro4[1]));
         
         $data[$i]['id']=$registro4[0];
-        $data[$i]['DESCRICAO']=$registro4[2];
-        $data[$i]['dataformat']=$dataformat;
-        $data[$i]['PATRIMONIO']=$registro4[4];
+        $data[$i]['data_ex']=$dataformat;
+        $data[$i]['descricao']=$registro4[2];
+        $data[$i]['data_ini']=$dataformat2;
+        $data[$i]['pat']=$registro4[4];
         $i++;
         
         echo "
  <tr>
  <td><h5>$registro4[0]</h5></td>
- <td><h5>$registro4[2]</h5></td>
  <td><h5>$dataformat</h5></td>
+ <td><h5>$registro4[2]</h5></td>
+ <td style='display:none'><h5>$dataformat2</h5></td>
  <td><h5>$registro4[4]</h5></td>
   <td> 
  <a class='btn-editar btn btn-sm btn-warning' href='../VERIFICAR/editar_almox.php?id=$registro4[0]'
@@ -170,11 +175,14 @@
       while ($registro3 = mysqli_fetch_array($pesq3)) {
 
         $dataformat=date('d/m/Y H:i:s', strtotime($registro3[1]));
+        $dataformat2=date('d/m/Y H:i:s', strtotime($registro3[1]));
+
         
         $data[$i]['id']=$registro3[0];
-        $data[$i]['DESCRICAO']=$registro3[2];
-        $data[$i]['dataformat']=$dataformat;
-        $data[$i]['PATRIMONIO']=$registro3[4];
+        $data[$i]['data_ex']=$dataformat;
+        $data[$i]['descricao']=$registro3[2];
+        $data[$i]['data_ini']=$dataformat2;
+        $data[$i]['pat']=$registro3[4];
         $i++;
 
         
@@ -182,8 +190,9 @@
         echo "
  <tr>
  <td><h5>$registro3[0]</h5></td>
- <td><h5>$registro3[2]</h5></td>
  <td><h5>$dataformat</h5></td>
+ <td><h5>$registro3[2]</h5></td>
+ <td style='display:none'><h5>$dataformat2</h5></td>
  <td><h5>$registro3[4]</h5></td>
   <td> 
  <a class='btn-editar btn btn-sm btn-warning' href='../VERIFICAR/editar_pat.php?id=$registro3[4]'
@@ -206,19 +215,26 @@
       while ($registro5 = mysqli_fetch_array($pesq5)) {
 
 
-$dataformat=date('d/m/Y H:i:s', strtotime($registro5[1]));
 
+        $dataformat=date('d/m/Y H:i:s', strtotime($registro5[1]));
+        $dataformat2=date('d/m/Y H:i:s', strtotime($registro5[1]));
+
+        
         $data[$i]['id']=$registro5[0];
-        $data[$i]['DESCRICAO']=$registro5[2];
-        $data[$i]['dataformat']=$dataformat;
-        $data[$i]['PATRIMONIO']=$registro5[4];
+        $data[$i]['data_ex']=$dataformat;
+        $data[$i]['descricao']=$registro5[2];
+        $data[$i]['data_ini']=$dataformat2;
+        $data[$i]['pat']=$registro5[4];
         $i++;
 
+        
+        
         echo "
  <tr>
  <td><h5>$registro5[0]</h5></td>
- <td><h5>$registro5[2]</h5></td>
  <td><h5>$dataformat</h5></td>
+ <td><h5>$registro5[2]</h5></td>
+ <td style='display:none'><h5>$dataformat2</h5></td>
  <td><h5>$registro5[4]</h5></td>
   <td> 
  <a class='btn-editar btn btn-sm btn-warning' href='../VERIFICAR/editar_pat.php?id=$registro5[4]'

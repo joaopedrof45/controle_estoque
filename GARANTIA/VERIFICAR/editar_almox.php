@@ -40,7 +40,7 @@ $id = $_GET['id'];
 
          
 
-<h2 class="title">Editar <?= $TIPO?></h2>
+<h2 class="title">Editar Garantia</h2>
     </div>
     <div class="divtable ">
 

@@ -20,7 +20,12 @@ if ($TIPO == "" || $TIPO == "Escolha uma opção" ||  $DESCRICAO == "" || $datai
 
 
   $suaString = strtolower($NOMEITEM);
+if($suaString =="nao existem produtos"){
+  echo "<script> alert('Não Existe esse produto) ;</script>";
 
+  echo "<script>history.go(-1)</script>";
+  exit;
+}
 
   if ($patrimonio == 0 && $TIPO == "Patrimonio") {
     echo "<script> alert('Patrimonio não pode ser zero') ;</script>";

@@ -42,7 +42,7 @@ $id = $_GET['id'];
 
          
 
-<h2 class="title">Editar <?= $TIPO?></h2>
+<h2 class="title">Editar Patrimônio</h2>
     </div>
     <div class="divtable ">
 
@@ -51,11 +51,14 @@ $id = $_GET['id'];
                     <label for="quantidadeProduto">
                         <h4>Patrimonio</h4>
                     </label>
-                    <input class="input--style-5" type="text" class="form-control" id="patalmox" name="patalmox" placeholder="Digite o nome do produto" autocomplete="off" value="<?= $pat ?>">
+                    <input class="input--style-5" type="text" class="form-control" id="patalmox" name="idpat" placeholder="Digite o nome do produto" autocomplete="off" value="<?= $pat ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="nomeProduto">
+
+<input  type="hidden"  id="id_almox" name="idalmox"  value="<?=0?>">
+
 
                         <h4>Descrição</h4>
                     </label>

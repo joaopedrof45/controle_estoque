@@ -89,7 +89,7 @@
 
 <?php
       $data[$i]['id']=$array['id'];
-      $data[$i]['DESCRICAO']=$array['nomesede'];
+      $data[$i]['nomesede']=$array['nomesede'];
       $data[$i]['endereco']=$array['endereco'];
       $data[$i]['nr'] = $array['nr'];
       $data[$i]['cep'] = $array['cep'];

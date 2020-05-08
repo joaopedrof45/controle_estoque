@@ -58,10 +58,17 @@
                 </div>
                 <div class="card-body">
                     <form name="form1" action="salva_cadastro.php" method="POST">
+<?php
+        
+                        if (isset($_GET['Cadastrado'])) {
+                            echo '<div  align="center" id="alerta" class="alert alert-success" role="alert">
+                <h4 style="color:green;">Produto cadastrado com sucesso!</h4>
+                </div>';
 
+                
+                        }
 
-
-
+?>
 
                         <div id="inp" class="form-row">
                             <div class="name">Nome da Sede</div>
@@ -103,6 +110,15 @@
                             </div>
                         </div>
 
+                           <div class="form-row">
+                            <div class="name">Região</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input id="desc2" class="input--style-5" type="text" name="regiao">
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
 
                             <input " class=" btn btn--radius-2 btn--red" type="submit" o value="Cadastrar" />
@@ -113,6 +129,10 @@
                         <br><input type="submit" class="btn btn--radius btn--pill btn--green btn--dir" value="Voltar">
 
                     </form>
+                    <br><br><br><br>
+                  <?php include_once("import_sedes.html"); ?>
+
+
                 </div>
             </div>
 

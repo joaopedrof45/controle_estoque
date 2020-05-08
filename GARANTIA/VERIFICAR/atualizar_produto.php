@@ -1,16 +1,24 @@
 <?php
 include_once("../../conexao.php");
 
-$nome = $_POST['nome'];
-$localmox = $_POST['localmox'];
-$quantidadealmox = $_POST['quantidadealmox'];
+@$idalmox = $_POST['idalmox'];
 $descalmox= $_POST['descalmox'];
-$dataalmox = $_POST['dataalmox'];
-$idalmox = $_POST['idalmox'];
+$dataini= $_POST['dataini'];
+$dataex = $_POST['dataex'];
+$idpat =$_POST['idpat'];
 
-$sql = "UPDATE controle SET NOMEITEM = '$nome', LOCALIZACAO = '$localmox', QUANTIDADE = $quantidadealmox, DATA = '$dataalmox',DESCRICAO = '$descalmox'" .
+if($idalmox==0){
+
+$sql = "UPDATE garantia SET  descricao = '$descalmox', data_ini = '$dataini', data_ex = '$dataex'" .
+       " WHERE pat =$idpat ";
+$update = mysqli_query($conn,$sql);
+	
+}else{
+$sql = "UPDATE garantia SET  descricao = '$descalmox', data_ini = '$dataini', data_ex = '$dataex'" .
        " WHERE id = $idalmox";
 $update = mysqli_query($conn,$sql);
+}
+
 
 if($update){
     header("Location: listar_produtos.php?atualizado=".$idalmox); 
